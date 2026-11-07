@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aprende HTML interactivo | De Cero a Tablas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header / Navbar -->
+  <header class="app-header">
+    <div class="logo-area">
+      <div class="logo-icon">&lt;/&gt;</div>
+      <div>
+        <h1>Aprende HTML <span>a Mano</span></h1>
+        <p class="subtitle">Entrena tu memoria muscular escribiendo código real</p>
+      </div>
+    </div>
+    <div class="header-controls">
+      <div class="progress-container">
+        <span class="progress-label" id="progress-text">Lección 1 de 10</span>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+      </div>
+      <button id="theme-toggle" class="btn-secondary" title="Cambiar tema"><i class="bi bi-moon-stars"></i></button>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- Barra lateral con índice de lecciones -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h3><i class="bi bi-journal-code"></i> Temario de HTML</h3>
+        <span class="badge" id="lesson-count-badge">10 Lecciones</span>
+      </div>
+      <ul class="lesson-list" id="lesson-list">
+        <!-- Renderizado dinámicamente con JS -->
+      </ul>
+    </aside>
+
+    <!-- Contenido principal interactivo -->
+    <section class="workspace">
+      <!-- 1. Etiqueta actual & Explicación / Sintaxis -->
+      <article class="card lesson-info-card">
+        <div class="tag-badge-container">
+          <span class="tag-pill" id="lesson-tag">&lt;p&gt;</span>
+          <span class="category-pill" id="lesson-category">Básico</span>
+        </div>
+        
+        <h2 id="lesson-title" class="lesson-title">Título de la lección</h2>
+        
+        <div class="theory-section">
+          <h4><i class="bi bi-question-circle-fill"></i> ¿Cómo se usa?</h4>
+          <p id="lesson-description" class="lesson-description"></p>
+        </div>
+
+        <div class="syntax-section">
+          <h4><i class="bi bi-code-slash"></i> Sintaxis y Ejemplo</h4>
+          <div class="code-preview-box">
+            <pre><code id="lesson-syntax" class="syntax-code"></code></pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. Ejercicio y Resultado Esperado -->
+      <article class="card exercise-card">
+        <div class="exercise-header">
+          <span class="badge-accent"><i class="bi bi-bullseye"></i> Ejercicio Práctico</span>
+          <button id="btn-hint" class="btn-hint"><i class="bi bi-lightbulb"></i> Ver Pista</button>
+        </div>
+        <p id="exercise-instruction" class="exercise-instruction"></p>
+        <div id="hint-box" class="hint-box hidden">
+          <i class="bi bi-lightbulb-fill hint-icon"></i>
+          <span id="hint-text"></span>
+        </div>
+
+        <div class="expected-result-container">
+          <div class="preview-header">
+            <span><i class="bi bi-eye-fill"></i> Resultado Esperado (Objetivo)</span>
+            <span class="pill-preview">Así debe verse</span>
+          </div>
+          <div class="preview-frame-wrapper">
+            <div id="expected-preview" class="render-output"></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. Editor de Código (Sin Copiar y Pegar) & Resultado en Vivo -->
+      <article class="card coding-card">
+        <div class="editor-header">
+          <div class="editor-title">
+            <span><i class="bi bi-pencil-square"></i> Tu Código (Escribe a mano)</span>
+            <span class="anti-paste-badge" title="No se permite pegar texto. Escribe cada carácter.">
+              <i class="bi bi-slash-circle-fill"></i> Copiar / Pegar Deshabilitado
+            </span>
+          </div>
+          <button id="btn-clear" class="btn-subtle" title="Limpiar editor"><i class="bi bi-trash3"></i> Borrar todo</button>
+        </div>
+
+        <div class="editor-wrapper" id="editor-wrapper">
+          <div class="line-numbers" id="line-numbers">1</div>
+          <textarea 
+            id="code-editor" 
+            class="code-editor" 
+            placeholder="Escribe tu código HTML aquí a mano..." 
+            spellcheck="false" 
+            autocomplete="off" 
+            autocorrect="off" 
+            autocapitalize="off"
+          ></textarea>
+        </div>
+
+        <!-- Alerta Toast de bloqueo de pegado -->
+        <div id="paste-warning" class="paste-warning hidden">
+          <i class="bi bi-exclamation-triangle-fill"></i> <strong>¡Copia y pega bloqueado!</strong> Debes escribir el código a mano para desarrollar memoria muscular.
+        </div>
+
+        <!-- 4. Resultado en Vivo de lo que el usuario escribió -->
+        <div class="live-result-container">
+          <div class="preview-header">
+            <span><i class="bi bi-display"></i> Tu Resultado en Tiempo Real</span>
+            <span class="pill-user-preview">Lo que renderiza tu código</span>
+          </div>
+          <div class="preview-frame-wrapper user-wrapper">
+            <iframe id="user-live-preview" sandbox="allow-same-origin" class="user-live-frame"></iframe>
+          </div>
+        </div>
+
+        <!-- 5. Mensaje de retroalimentación y Navegación -->
+        <div class="actions-footer">
+          <div id="feedback-msg" class="feedback-msg hidden"></div>
+          
+          <div class="nav-buttons">
+            <button id="btn-prev" class="btn-secondary" disabled><i class="bi bi-arrow-left"></i> Anterior</button>
+            <button id="btn-check" class="btn-primary"><i class="bi bi-check2-circle"></i> Comprobar Código</button>
+            <button id="btn-next" class="btn-success" disabled>Siguiente Lección <i class="bi bi-arrow-right"></i></button>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <!-- Modal de felicitación por completar todo el curso -->
+  <div id="completion-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="trophy-icon"><i class="bi bi-trophy-fill"></i></div>
+      <h2>¡Felicitaciones! Has completado el temario</h2>
+      <p>Has practicado desde los encabezados básicos hasta la creación de tablas completas en HTML, ¡escribiendo cada etiqueta a mano!</p>
+      <div class="modal-actions">
+        <button id="btn-restart" class="btn-primary"><i class="bi bi-arrow-clockwise"></i> Repasar desde el inicio</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
